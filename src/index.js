@@ -2,37 +2,39 @@ import React, { Component } from "react";
 
 import { StyleSheet, View, Button, Text } from "react-native";
 
-import Todo from "./components/Todo";
-
 export default class App extends Component {
   state = {
-    usuario: "Douglas",
-    todos: [
-      {
-        id: 0,
-        text: "Fazer café"
-      },
-      {
-        id: 1,
-        text: "Estudar o GoNative"
-      }
-    ]
+    text: "",
+    counter: 0
   };
 
-  addTodo = () => {
-    this.setState({
-      todos: [...this.state.todos, { id: Math.random(), text: "Novo todo" }]
-    });
+  componentDidMount() {
+    // setTimeout(() => {
+    //   this.setState({ text: "Hello World" });
+    // }, 3000);
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return { text: nextProps.text };
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.counter < 5;
+  }
+
+  componentDidUpdate(prevProps, prevState) {}
+
+  componentWillMount() {}
+
+  handleAddCounter = () => {
+    this.setState({ counter: this.state.counter + 1 });
   };
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>{this.state.usuario}</Text>
-        {this.state.todos.map(todo => (
-          <Todo key={todo.id} title={todo.text} />
-        ))}
-        <Button title="Adicionar todo" onPress={this.addTodo} />
+        <Button onPress={this.handleAddCounter} title="Add" />
+        <Text>{this.state.counter}</Text>
       </View>
     );
   }
