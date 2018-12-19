@@ -1,44 +1,22 @@
-import "./config/ReactotronConfig";
+import './config/ReactotronConfig';
 
-import React, { Component } from "react";
+import React from 'react';
 
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from 'react-native';
 
-console.tron.log("Hello world");
-
-export default class App extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.box} />
-        <View style={styles.box} />
-        <View style={styles.box} />
-        <View style={styles.box} />
-        <View style={styles.box}>
-          <Text style={styles.boxText}>Oi</Text>
-        </View>
-      </View>
-    );
-  }
-}
+const bgColor = '#f5fcff';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-    alignContent: "center",
-    backgroundColor: "#333"
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    alignContent: 'center',
+    backgroundColor: bgColor,
   },
-  box: {
-    width: 80,
-    height: 80,
-    backgroundColor: "#F00",
-    margin: 10,
-    transform: [{ rotateZ: "20deg" }]
-  },
-  boxText: {
-    color: "#fff"
-  }
 });
+
+const App = () => <View style={styles.container} />;
+
+export default App;

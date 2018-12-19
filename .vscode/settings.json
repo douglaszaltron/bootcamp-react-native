@@ -1,5 +1,6 @@
 {
   "workbench.colorTheme": "Dracula",
+  "editor.rulers": [80, 120],
   "html.suggest.html5": true,
   "prettier.eslintIntegration": true,
   "breadcrumbs.enabled": true,
@@ -9,5 +10,8 @@
   "javascript.format.enable": false,
   "editor.formatOnSave": true,
   "cSpell.language": "en,pt_BR",
-  "cSpell.words": ["gonative"]
+  "cSpell.words": [
+    "Reactotron",
+    "gonative"
+  ]
 }
