@@ -1,5 +1,7 @@
 import './config/ReactotronConfig';
 
+import TodoList from '~/components/TodoList';
+
 import React from 'react';
 
 import { StyleSheet, View } from 'react-native';
@@ -17,6 +19,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const App = () => <View style={styles.container} />;
+const App = () => (
+  <View style={styles.container}>
+    <TodoList />
+  </View>
+);
 
 export default App;
