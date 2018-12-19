@@ -1,28 +1,24 @@
-# Desafio 1
+# Desafio 2
 
-Crie uma aplicação do zero e configure o ESLint, EditorConfig, Reactotron, React DevTools e Babel Root Import. Assim que configurados, você deve reproduzir o layout abaixo utilizando FlexBox layout:
+Crie uma aplicação do zero e configura as ferramentas: ESLint, Reactotron, Babel Root Import e EditorConfig. Nesse desafio você irá construir uma aplicação utilizando a API do Github para listar issues (questões) de um repositório. A interface da aplicação deve ser construída utilizando FlexBox e seguir conforme imagem abaixo:
 
-![Feed](/assets/feed.png)
+O app permitirá ao usuário inserir o nome de um repositório existente que será exibido na lista da primeira tela e clicando sobre os repositórios, poderá listar as issues pertencentes ao mesmo, além disso pode filtrar entre issues Abertas, fechadas ou todas. As duas páginas do app devem ser estilizadas como as seguintes imagens:
 
-Nesse projeto você desenvolverá um feed de posts estilo Facebook. Crie um layout tentando chegar o mais próximo possível da imagem acima.
+![Telas](/assets/screens.png)
 
 ## Regras
 
-- O layout deve ser criado utilizando apenas os componentes `<View />`, `<Text />` e `<ScrollView />` do React Native;
-- A caixa branca com o título “Aprendendo React Native” deve estar separada em outro componente chamado Post, o mesmo deve estar em outro arquivo chamado Post.js.
-- Os posts devem estar armazenados no estado do componente principal da sua aplicação contendo título, autor e descrição de cada item. Dessa forma, os mesmos devem ser renderizados em tela utilizando a função map para percorrê-los.
+- O input de adicionar repositório deve receber a informação da seguinte forma: organização/repositório (Exemplo: “rocketseat/comunidade”);
+- Ao clicar no botão “+” uma request será enviada à API do Github buscando informações do repositório e armazenando os campos ID, nome, organização e avatar no storage (AsyncStorage) do dispositivo;
+- A lista de repositórios adicionada deve ser mantida no AsyncStorage em forma de array e recuperada ao inicializar a aplicação exibindo os dados em tela;
+- O usuário deve poder atualizar a lista de repositórios arrastando a lista pra baixo com a opção refresh do `<FlatList />`;
+- Ao clicar em um repositório, o usuário deverá ser navegado para a tela de issues do repositório e só nesse momento carregar as issues da API (não armazene as issues no AsyncStorage). Você vai precisar enviar o repositório como parâmetro na navegação, veja: https://reactnavigation.org/docs/en/params.html;
+- Deve ser possível filtrar entre issues abertas, fechadas e todas (por padrão);
+- A linha do título da issue deve ocupar apenas a linha (https://facebook.github.io/react-native/docs/text#numberoflines), não quebrando e mostrando “...” (https://facebook.github.io/react-native/docs/text#ellipsizemode) no final do texto para indicar que possui mais conteúdo;
+- Ao clicar em uma issue, o usuário deve ser redirecionado para a URL da issue pelo navegador (https://facebook.github.io/react-native/docs/linking#openurl), não é preciso abrir a informação na tela do app;
+- As abas de status das issues não precisam utilizar React Navigation, você pode fazer apenas com botões `<TouchableOpacity>`;
 
-## Dicas
+## Exemplos URL
 
-- Todas propriedades de estilo disponíveis para os componentes estão documentadas no link: https://github.com/vhpoet/react-native-styling-cheat-sheet
-
-- Para alinhar todo conteúdo de um componente ao centro basta unir as propriedades `justifyContent: “center”` e `alignItems: “center”`;
-- Para fazer que seja possível realizar scroll e ter uma barra de rolagem quando haverem muitos posts em tela é necessária a utilização do componente `<ScrollView \>` por volta da lista de posts, como por exemplo:
-
-```
-<ScrollView>
-  <Post />
-  <Post />
-  <Post />
-</ScrollView>
-```
+Repositório: https://api.github.com/repos/react-community/react-navigation
+Issues: https://api.github.com/repos/react-community/react-navigation/issues
