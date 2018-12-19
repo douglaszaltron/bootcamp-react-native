@@ -1,5 +1,5 @@
 import './config/ReactotronConfig';
-import './config/ReactotronConfig';
+import './config/DevToolsConfig';
 
 import TodoList from '~/components/TodoList';
 
