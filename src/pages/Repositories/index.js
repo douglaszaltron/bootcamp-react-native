@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+
+import Header from '~/components/Header';
 
 const Repositories = () => (
   <View>
-    <Text>Repositórios</Text>
+    <Header title="Repositórios" />
   </View>
 );
 
