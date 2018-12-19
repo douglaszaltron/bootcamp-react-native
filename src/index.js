@@ -1,6 +1,10 @@
+import "./config/ReactotronConfig";
+
 import React, { Component } from "react";
 
 import { StyleSheet, View, Text } from "react-native";
+
+console.tron.log("Hello world");
 
 export default class App extends Component {
   render() {
