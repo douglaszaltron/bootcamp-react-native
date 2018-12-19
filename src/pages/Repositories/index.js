@@ -1,7 +1,11 @@
 import React from 'react';
 
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 
-const Repositories = () => <View />;
+const Repositories = () => (
+  <View>
+    <Text>Repositórios</Text>
+  </View>
+);
 
 export default Repositories;
