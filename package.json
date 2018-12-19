@@ -8,6 +8,7 @@
     "react-devtools": "react-devtools"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "prop-types": "^15.6.2",
     "react": "16.6.3",
     "react-devtools": "^3.4.3",
