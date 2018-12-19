@@ -1,40 +1,18 @@
 import React, { Component } from "react";
 
-import { StyleSheet, View, Button, Text } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 
 export default class App extends Component {
-  state = {
-    text: "",
-    counter: 0
-  };
-
-  componentDidMount() {
-    // setTimeout(() => {
-    //   this.setState({ text: "Hello World" });
-    // }, 3000);
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    return { text: nextProps.text };
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextState.counter < 5;
-  }
-
-  componentDidUpdate(prevProps, prevState) {}
-
-  componentWillMount() {}
-
-  handleAddCounter = () => {
-    this.setState({ counter: this.state.counter + 1 });
-  };
-
   render() {
     return (
       <View style={styles.container}>
-        <Button onPress={this.handleAddCounter} title="Add" />
-        <Text>{this.state.counter}</Text>
+        <View style={styles.box} />
+        <View style={styles.box} />
+        <View style={styles.box} />
+        <View style={styles.box} />
+        <View style={styles.box}>
+          <Text style={styles.boxText}>Oi</Text>
+        </View>
       </View>
     );
   }
@@ -43,8 +21,20 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF"
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    alignContent: "center",
+    backgroundColor: "#333"
+  },
+  box: {
+    width: 80,
+    height: 80,
+    backgroundColor: "#F00",
+    margin: 10,
+    transform: [{ rotateZ: "20deg" }]
+  },
+  boxText: {
+    color: "#fff"
   }
 });
