@@ -1,9 +1,15 @@
 import React from 'react';
+import { View } from 'react-native';
+import { Provider } from 'react-redux';
+
 import '~/config/ReactotronConfig';
 import '~/config/DevToolsConfig';
+import store from '~/store';
 
-import Routes from './routes';
-
-const App = () => <Routes />;
+const App = () => (
+  <Provider store={store}>
+    <View />
+  </Provider>
+);
 
 export default App;
