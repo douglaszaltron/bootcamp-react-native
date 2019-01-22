@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {
   View, Text, StyleSheet, TouchableOpacity,
@@ -17,23 +18,29 @@ const styles = StyleSheet.create({
   },
 });
 
-const TodoList = ({ todos, addTodo }) => {
-  console.tron.log(todos);
+const TodoList = ({ todos, addTodo }) => (
+  <View style={styles.container}>
+    {todos.map(todo => (
+      <Text key={todo.id}>{todo.text}</Text>
+    ))}
+    <TouchableOpacity
+      onPress={() => {
+        addTodo('Fazer café novamente');
+      }}
+    >
+      <Text>Adicionar todo</Text>
+    </TouchableOpacity>
+  </View>
+);
 
-  return (
-    <View style={styles.container}>
-      {todos.map(todo => (
-        <Text>{todo}</Text>
-      ))}
-      <TouchableOpacity
-        onPress={() => {
-          addTodo('Fazer café novamente');
-        }}
-      >
-        <Text>Adicionar todo</Text>
-      </TouchableOpacity>
-    </View>
-  );
+TodoList.propTypes = {
+  todos: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      text: PropTypes.string,
+    }),
+  ).isRequired,
+  addTodo: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
