@@ -1,30 +1,21 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import api from '~/services/api';
-
 import {
-  View, AsyncStorage, ActivityIndicator, FlatList,
+  View, AsyncStorage, ActivityIndicator, FlatList, Alert, Text,
 } from 'react-native';
 
-import Icon from 'react-native-ionicons';
-
-import Header from '~/components/Header';
+import api from '~/services/api';
 import RepositoryItem from './RepositoryItem';
+import RepositorySearch from './RepositorySearch';
 import styles from './styles';
-
-const TabIcon = ({ tintColor }) => <Icon name="list" size={26} color={tintColor} />;
-
-TabIcon.propTypes = {
-  tintColor: PropTypes.string.isRequired,
-};
 
 export default class Repositories extends Component {
   static navigationOptions = {
-    tabBarIcon: TabIcon,
+    title: 'GitIssues',
   };
 
   state = {
-    data: [],
+    items: [],
+    search: '',
     loading: true,
     refreshing: false,
   };
@@ -35,20 +26,53 @@ export default class Repositories extends Component {
 
   loadRepositories = async () => {
     this.setState({ refreshing: true });
-    const username = await AsyncStorage.getItem('@Githuber:username');
-    const { data } = await api.get(`/users/${username}/repos`);
+    const items = JSON.parse(await AsyncStorage.getItem('@GitIssues:items'));
+    this.setState({ items: items || [], refreshing: false, loading: false });
+  };
 
-    this.setState({ data, loading: false, refreshing: false });
+  onChangeText = (value) => {
+    this.setState({ search: value });
+  };
+
+  handleSubmit = async () => {
+    const { search, items } = this.state;
+    this.setState({ loading: true });
+
+    if (!search) {
+      Alert.alert('Ops!', 'Preencha o repositório para continuar');
+      this.setState({ loading: false });
+      return;
+    }
+
+    if (items.find(item => item.full_name === search)) {
+      Alert.alert('Ops!', 'Repositório duplicado');
+      this.setState({ loading: false });
+      return;
+    }
+
+    try {
+      const { data } = await api.get(`/repos/${search}`);
+      this.setState({ search: '', items: [...items, data] });
+      await AsyncStorage.setItem('@GitIssues:items', JSON.stringify([...items, data]));
+    } catch (error) {
+      Alert.alert('Ops!', 'Repositório inexistente');
+    } finally {
+      this.setState({ loading: false });
+    }
   };
 
   renderListItem = ({ item }) => <RepositoryItem repository={item} />;
 
   renderList = () => {
-    const { data, refreshing } = this.state;
+    const { items, refreshing } = this.state;
+
+    if (!items.length) {
+      return <Text style={styles.empty}>Nenhum repositório adicionado</Text>;
+    }
 
     return (
       <FlatList
-        data={data}
+        data={items}
         keyExtractor={item => String(item.id)}
         renderItem={this.renderListItem}
         onRefresh={this.loadRepositories}
@@ -58,12 +82,21 @@ export default class Repositories extends Component {
   };
 
   render() {
-    const { loading } = this.state;
+    const { search, loading } = this.state;
 
     return (
       <View style={styles.container}>
-        <Header title="Repositórios" />
-        {loading ? <ActivityIndicator style={styles.loading} /> : this.renderList()}
+        <RepositorySearch
+          search={search}
+          onChangeText={this.onChangeText}
+          handleSubmit={this.handleSubmit}
+        />
+        <View style={styles.divider} />
+        {loading ? (
+          <ActivityIndicator size="large" color={styles.loading.color} style={styles.loading} />
+        ) : (
+          this.renderList()
+        )}
       </View>
     );
   }

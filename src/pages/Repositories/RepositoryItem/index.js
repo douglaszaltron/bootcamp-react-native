@@ -1,38 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { View, Text } from 'react-native';
+import {
+  View, Text, Image, TouchableOpacity,
+} from 'react-native';
+import { withNavigation } from 'react-navigation';
+
 import Icon from 'react-native-ionicons';
 
 import styles from './styles';
 
-const RepositoryItem = ({ repository }) => (
-  <View style={styles.container}>
-    <Text style={styles.title}>{repository.full_name}</Text>
-    <View style={styles.infoContainer}>
-      <View style={styles.info}>
-        <Icon name="star" size={12} style={styles.infoIcon} />
-        <Text style={styles.infoText}>{repository.stargazers_count}</Text>
-      </View>
-      <View style={styles.info}>
-        <Icon name="git-network" size={12} style={styles.infoIcon} />
-        <Text style={styles.infoText}>{repository.forks_count}</Text>
-      </View>
-      <View style={styles.info}>
-        <Icon name="eye" size={12} style={styles.infoIcon} />
-        <Text style={styles.infoText}>{repository.watchers_count}</Text>
-      </View>
+const RepositoryItem = ({ repository, navigation: { navigate } }) => (
+  <TouchableOpacity
+    style={styles.container}
+    onPress={() => navigate('Issues', { title: repository.name, full_name: repository.full_name })}
+  >
+    <Image style={styles.avatar} source={{ uri: repository.owner.avatar_url }} />
+    <View style={styles.wrapper}>
+      <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+        {repository.name}
+      </Text>
+      <Text style={styles.subtitle}>{repository.owner.login}</Text>
     </View>
-  </View>
+    <Icon style={styles.icon} name="ios-arrow-forward" size={16} />
+  </TouchableOpacity>
 );
 
 RepositoryItem.propTypes = {
   repository: PropTypes.shape({
-    full_name: PropTypes.string,
-    stargazers_count: PropTypes.number,
-    forks_count: PropTypes.number,
-    watchers_count: PropTypes.number,
+    name: PropTypes.string,
+    owner: PropTypes.shape({
+      login: PropTypes.string,
+      avatar_url: PropTypes.string,
+    }),
+  }).isRequired,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
   }).isRequired,
 };
 
-export default RepositoryItem;
+export default withNavigation(RepositoryItem);

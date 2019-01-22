@@ -6,10 +6,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     backgroundColor: colors.white,
+    borderRadius: metrics.baseRadius,
     padding: metrics.basePadding / 2,
     marginHorizontal: metrics.baseMargin * 2,
     marginBottom: metrics.baseMargin,
-    borderRadius: metrics.baseRadius,
   },
   avatar: {
     height: 40,
