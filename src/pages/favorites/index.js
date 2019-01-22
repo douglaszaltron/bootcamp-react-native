@@ -2,8 +2,10 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-// import styles from './styles';
+const Favorites = () => <View />;
 
-const favorites = () => <View />;
+Favorites.navigationOptions = {
+  title: 'Meus favoritos',
+};
 
-export default favorites;
+export default Favorites;
