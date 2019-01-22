@@ -21,10 +21,11 @@ class Main extends Component {
       navigate: PropTypes.func,
     }).isRequired,
     addFavoriteRequest: PropTypes.func.isRequired,
+    favoritesCount: PropTypes.number.isRequired,
   };
 
   state = {
-    repoNameInput: '',
+    repoNameInput: 'ionic-team/ionic',
   };
 
   navigateToFavorites = () => {
@@ -66,7 +67,11 @@ class Main extends Component {
         </View>
         <View style={styles.footer}>
           <TouchableOpacity onPress={this.navigateToFavorites}>
-            <Text style={styles.footerLink}>Meus favoritos (3)</Text>
+            <Text style={styles.footerLink}>
+Meus favoritos (
+              {this.props.favoritesCount}
+)
+            </Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -74,9 +79,13 @@ class Main extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  favoritesCount: state.favorites.length,
+});
+
 const mapDispatchToProps = dispatch => bindActionCreators(FavoritesActions, dispatch);
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(Main);
